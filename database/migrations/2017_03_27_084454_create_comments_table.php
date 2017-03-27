@@ -19,10 +19,10 @@ class CreateCommentsTable extends Migration
            $table->text('comment');
            $table->string('author_email');
            $table->string('author_name');
-           $table->boolean('visible');
+           $table->boolean('visible')->default(1);
            $table->timestamps();
 
-           $table->foreign('article_id')->references('id')->on('articles');
+           $table->foreign('article_id')->references('id')->on('articles')->onDelete('cascade');
       });
     }
 

@@ -18,10 +18,10 @@ class CreateArticlesTable extends Migration
            $table->string('name', 100);
            $table->text('description');
            $table->string('picture');
-           $table->integer('views');
-           $table->integer('likes');
-           $table->boolean('comments');
-           $table->boolean('available');
+           $table->integer('views')->default(0);
+           $table->integer('likes')->default(0);
+           $table->boolean('comments')->default(1);
+           $table->boolean('available')->default(0);
            $table->timestamps();
       });
     }
