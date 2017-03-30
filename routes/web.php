@@ -14,3 +14,18 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');
+
+
+
+
+Route::group(['prefix' => 'admin'], function(){
+   Route::get('/', 'ArticleController@index')->name('article.index');
+   Route::get('/create-article', 'ArticleController@create');
+   Route::post('/create-article', 'ArticleController@store');
+   // Route::any('/update-article/{id}', 'ArticleController@update')->name('article.edit');
+   Route::get('/delete/{id}', 'ArticleController@delete')->name('article.delete');
+});
