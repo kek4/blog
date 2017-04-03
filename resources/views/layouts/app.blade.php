@@ -11,6 +11,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/materialize.css') }}"  media="screen,projection"/>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
     <!-- Scripts -->
@@ -20,7 +21,7 @@
         ]) !!};
     </script>
 </head>
-<body>
+<header>
     <div id="app">
         <nav class="navbar navbar-default navbar-static-top">
             <div class="container">
@@ -78,10 +79,16 @@
             </div>
         </nav>
 
-        @yield('content')
     </div>
-
+</header>
+<body>
+@yield('content')
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/jquery.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/materialize.js') }}"></script>
 </body>
+<footer>
+</footer>
+
 </html>
