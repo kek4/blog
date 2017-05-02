@@ -41,7 +41,7 @@ class ArticleController extends Controller
     public function store(Request $request)
     {
       $validator = Validator::make($request->all(), [
-      'title' => 'required',
+      'title' => 'required|unique',
       'description' => 'required',
       'inputFile' => 'required|image',
       ],
@@ -64,7 +64,7 @@ class ArticleController extends Controller
          $article->name = $request->title;
          $article->description = $request->description;
          if ($request->available=='on') {
-            $article->available = 1;   
+            $article->available = 1;
          }
          $article->save();
 
