@@ -15,11 +15,15 @@ class CreateArticlesTable extends Migration
     {
       Schema::create('articles', function (Blueprint $table) {
            $table->increments('id');
-           $table->string('name', 100);
+           $table->string('title', 100);
            $table->text('description');
-           $table->integer('views')->default(0);
-           $table->integer('likes')->default(0);
-           $table->boolean('comments')->default(0);
+           $table->integer('nbers')->default(0);
+           $table->integer('bake_time')->default(0);
+           $table->integer('prep_time')->default(0);
+           $table->integer('temperature')->default(0);
+         //   $table->integer('views')->default(0);
+         //   $table->integer('likes')->default(0);
+         //   $table->boolean('comments')->default(0);
            $table->boolean('available')->default(0);
            $table->timestamps();
       });
