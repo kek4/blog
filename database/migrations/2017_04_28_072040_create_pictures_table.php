@@ -15,12 +15,12 @@ class CreatePicturesTable extends Migration
     {
       Schema::create('pictures', function (Blueprint $table) {
            $table->increments('id');
-           $table->integer('article_id')->unsigned();
+           $table->integer('post_id')->unsigned();
            $table->text('alt');
            $table->text('title');
            $table->timestamps();
 
-           $table->foreign('article_id')->references('id')->on('articles')->onDelete('cascade');
+           $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');
       });
     }
 
