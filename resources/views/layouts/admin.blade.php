@@ -85,6 +85,8 @@
 </header>
 <body>
 @yield('content')
+
+
     <!-- Scripts -->
 @section('js')
 
@@ -95,6 +97,7 @@
    <script src="{{asset ('components/toastr/toastr.min.js')}}"></script>
    <script src="{{ asset('js/app.js') }}"></script>
    <script src="{{ asset('js/AppController.js') }}"></script>
+   <script src="{{ asset('js/ListIngController.js') }}"></script>
 @show
 </body>
 <footer>

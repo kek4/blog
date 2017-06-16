@@ -6,5 +6,8 @@ use Illuminate\Http\Request;
 
 class ListIngController extends Controller
 {
-    //
+   public function store(Request $request)
+   {
+    
+     }
 }

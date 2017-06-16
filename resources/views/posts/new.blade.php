@@ -90,5 +90,52 @@
 </form>
 <div id="content" ng-controller="ListIngController">
 
+   <div class="form-group">
+      <label class="col-md-3 col-sm-3 col-xs-12 control-label">select liste
+      </label>
+      <div class="col-md-6 col-sm-6 col-xs-12">
+         <label for="sel1">Select list:</label>
+         <select class="form-control" id="sel1" ng-model="allListIngredient.model">
+           <option ng-click="raz()">new liste</option>
+           <option ng-repeat="listIngredient in allListIngredient.listIng" ng-click="test()" ng-value="#{ listIngredient }#">#{ listIngredient.title }#</option>
+         </select>
+      </div>
+      <div class="col-md-3 col-sm-3 col-xs-12">
+         <button type="submit" class="btn btn-primary">Ajouter</button>
+      </div>
+   </div>
+
+   <div class="form-group" id="DivTitleListIng">
+      <label class="control-label col-md-3 col-sm-3 col-xs-12">Titre</label>
+      <div class="col-md-9 col-sm-9 col-xs-12">
+         <input class="form-control " placeholder="Titre" ng-model="MyTitleListIng" type="text" id="title" name="title">
+      </div>
+   </div>
+
+   <!-- tableau des ingredient de la liste a verifier pour l'id -->
+   <div class="col-md-9 col-sm-9 col-xs-12">
+      <table class="table table-striped">
+         <tbody>
+          <tr ng-repeat="ing in listIngredient.ingredient track by $index">
+             <td>#{ ing }#</td>
+             <td><input class="form-control"  type="number" id="#{ing.id}#" name="ingredient"></td>
+          </tr>
+         </tbody>
+      </table>
+   </div>
+   <div class="col-md-3 col-sm-3 col-xs-12">
+      <button type="submit" class="btn btn-primary" ng-click="AddListIng()">Ajouter</button>
+   </div>
+   <!-- input d'ajout d'ingredient a la liste a rajouter un autocomplete -->
+   <div class="form-group">
+      <label class="control-label col-md-3 col-sm-3 col-xs-12">ingredient</label>
+      <div class="col-md-9 col-sm-9 col-xs-12">
+          <input class="form-control" ng-enter="AddIngredient()" ng-model="MyIngredient" placeholder="Ingredient" type="text" id="ingredient" name="ingredient"/>
+      </div>
+      @if($errors->has('ingredient'))
+      <span class="col-md-9 col-sm-9 col-xs-12 text-danger">{{ $errors->first('ingredient')}}</span>
+      @endif
+   </div>
 </div>
+
 @endsection
