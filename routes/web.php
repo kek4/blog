@@ -28,11 +28,12 @@ Route::group(['prefix' => 'ingredient'], function(){
    // Route::get('/delete/{book}', 'BookController@delete')->name('book.delete');
    // Route::any('/viewed/{book}', 'BookController@viewed')->name('book.viewed');
 });
-});
-//Liste Ingredients
+
+   //Liste Ingredients
 Route::group(['prefix' => 'list-ingredient'], function(){
-   // Route::get('/ingredient-listJson', 'IngredientController@listJson')->name('ingredient.listJson');
+   Route::get('/listIng-listJson', 'ListIngController@listJson')->name('list-ingredient.listJson');
    Route::post('/store', 'ListIngController@store')->name('list-ingredient.store');
+});
 });
 
 Route::get('home', 'PostController@index');

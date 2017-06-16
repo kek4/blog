@@ -1,45 +1,45 @@
 app.controller('ListIngController', function ListIngController($scope, $http) {
 
+   $scope.MyTitleListIng = '';
    $scope.listIngredient = {title:'', ingredient:[]};
-   $scope.allListIngredient = {model: null,
-                              listIng:[]};
-   $scope.allIngredient = [];
+   $scope.errorTitle = 'Le titre est trop court';
+   $scope.existTitle = 'Le titre existe déjà';
 
    //Get list of all ingredient in json
-   $http.get('ingredient/ingredient-listJson').then(function(response){
-      $scope.allIngredient = response.data;
+   $http.get('list-ingredient/listIng-listJson').then(function(response){
+      $scope.allListIngredient = response.data;
+      console.log($scope.allListIngredient);
    });
 
    $scope.AddIngredient = function(){
-      // if (!existIngredient()) {
-      //    ($scope.allIngredient).push($scope.MyIngredient);
-      // }
       (($scope.listIngredient).ingredient).push($scope.MyIngredient);
       $scope.MyIngredient = '';
    };
 
    $scope.AddListIng = function(){
       if (($scope.MyTitleListIng).length > 2) {
-         $( "#DivTitleListIng").removeClass( "has-error" );
          ($scope.listIngredient).title = $scope.MyTitleListIng;
          (($scope.allListIngredient).listIng).push($scope.listIngredient);
          $scope.MyTitleListIng = '';
          $scope.listIngredient = {title:'', ingredient:[]};
-         //remove class and message for the missing title
-      }else {
-         $( "#DivTitleListIng").addClass( "has-error" )
-         //add class and message for the missing title
       }
    };
 
+   $scope.AddListIngToArt = function(){
+      console.log($scope.allListIngredient);
+   };
+
    //refaire pour checker l'existence du titre de la liste. on check les ingredient dans le controller laravel
-    function existIngredient(){
-      var exist = false;
-      $.each($scope.allIngredient, function(i, obj){
-         if(obj.title == $scope.MyIngredient)
-         exist = true;
-      });
-      return exist;
+    $scope.existTitle = function (){
+      if (($scope.MyTitleListIng).length > 3) {
+         console.log($scope.MyTitleListIng);
+         $.each(($scope.allListIngredient).listIng, function(i, obj){
+            if(obj.title == $scope.MyTitleListIng){
+               return true;
+            }
+         });
+      }
+      return false;
    }
 
 

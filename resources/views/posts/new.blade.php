@@ -1,11 +1,15 @@
 @extends('layouts.admin')
-@section('content')
+@section('css')
+   @parent
+   <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
+@endsection
 @section('js')
    @parent
    @if(Session::has('success'))
       <script>toastr.success("{{ Session::get('success') }}", "Bravo !")</script>
    @endif
 @endsection
+@section('content')
 <div class="center-block">
    <h2>New</h2>
    @if(count($errors) > 0)
@@ -97,19 +101,22 @@
          <label for="sel1">Select list:</label>
          <select class="form-control" id="sel1" ng-model="allListIngredient.model">
            <option ng-click="raz()">new liste</option>
-           <option ng-repeat="listIngredient in allListIngredient.listIng" ng-click="test()" ng-value="#{ listIngredient }#">#{ listIngredient.title }#</option>
+           <option ng-repeat="listIngredient in allListIngredient track by $index" ng-click="test()" ng-value="#{ listIngredient }#">#{ listIngredient.title }#</option>
          </select>
       </div>
       <div class="col-md-3 col-sm-3 col-xs-12">
-         <button type="submit" class="btn btn-primary">Ajouter</button>
+         <button type="submit" class="btn btn-primary" ng-click="AddListIngToArt()">Ajoutera la recette</button>
       </div>
    </div>
 
-   <div class="form-group" id="DivTitleListIng">
+   <div class="form-group" ng-class="MyTitleListIng.length < 3 && MyTitleListIng.length > 0 ? 'has-error' : ''">
       <label class="control-label col-md-3 col-sm-3 col-xs-12">Titre</label>
       <div class="col-md-9 col-sm-9 col-xs-12">
          <input class="form-control " placeholder="Titre" ng-model="MyTitleListIng" type="text" id="title" name="title">
       </div>
+      <span class="col-md-9 col-sm-9 col-xs-12 text-danger" ng-class="MyTitleListIng.length < 3 && MyTitleListIng.length > 0 ? 'error-list-ing' : 'ok-list-ing'">#{ errorTitle }#</span>
+      <!-- A revoir ca ne fonctionne pas -->
+      <!-- <span class="col-md-9 col-sm-9 col-xs-12 text-danger" ng-class="existTitle() ? 'error-list-ing' : 'ok-list-ing'">#{ existTitle }#</span> -->
    </div>
 
    <!-- tableau des ingredient de la liste a verifier pour l'id -->

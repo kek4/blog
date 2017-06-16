@@ -8,6 +8,6 @@ class Ingredient extends Model
 {
    public function list_ingredients()
    {
-      return $this->belongsToMany(ListIng::class);
+      return $this->belongsToMany(ListIngredient::class);
    }
 }
