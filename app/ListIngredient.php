@@ -6,8 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class ListIngredient extends Model
 {
-
+   public $timestamps = false;
    protected $appends = ['model', 'new'];
+   protected $hidden = ['pivot'];
 
    function getModelAttribute() {
      return $this->model = null;

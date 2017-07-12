@@ -18,22 +18,22 @@ Route::get('/', function () {
 //Ingredients
 
 Route::group(['prefix' => 'admin'], function(){
-Route::get('create',function () {
-    return view('posts.new');
-});
-Route::group(['prefix' => 'ingredient'], function(){
-   // Route::get('/list', 'BookController@toList')->name('book.list');
-   Route::get('/ingredient-listJson', 'IngredientController@listJson')->name('ingredient.listJson');
-   Route::any('/store', 'IngredientController@store')->name('ingredient.store');
-   // Route::get('/delete/{book}', 'BookController@delete')->name('book.delete');
-   // Route::any('/viewed/{book}', 'BookController@viewed')->name('book.viewed');
-});
+   Route::get('create',function () {
+       return view('posts.new');
+   });
+   Route::group(['prefix' => 'ingredient'], function(){
+      // Route::get('/list', 'BookController@toList')->name('book.list');
+      Route::get('/ingredient-listJson', 'IngredientController@listJson')->name('ingredient.listJson');
+      Route::any('/store', 'IngredientController@store')->name('ingredient.store');
+      // Route::get('/delete/{book}', 'BookController@delete')->name('book.delete');
+      // Route::any('/viewed/{book}', 'BookController@viewed')->name('book.viewed');
+   });
 
-   //Liste Ingredients
-Route::group(['prefix' => 'list-ingredient'], function(){
-   Route::get('/listIng-listJson', 'ListIngController@listJson')->name('list-ingredient.listJson');
-   Route::post('/store', 'ListIngController@store')->name('list-ingredient.store');
-});
+      //Liste Ingredients
+   Route::group(['prefix' => 'list-ingredient'], function(){
+      Route::get('/listIng-listJson', 'ListIngController@listJson')->name('list-ingredient.listJson');
+      Route::post('/store', 'ListIngController@store')->name('list-ingredient.store');
+   });
 });
 
 Route::get('home', 'PostController@index');

@@ -23,6 +23,7 @@
    @endif
 </div>
 
+<div id="content" ng-controller="ListIngController">
 <form  role="form" method="post" action="{{ route('admin.store') }}" class="form-horizontal" enctype="multipart/form-data">
    {{ csrf_field() }}
    <div class="form-group">
@@ -81,6 +82,21 @@
       </div>
    </div>
 
+   <div class="form-group">
+      <label class="col-md-3 col-sm-3 col-xs-12 control-label">Liste ingredient de cette recette
+      </label>
+      <div class="col-md-9 col-sm-9 col-xs-12">
+         <span ng-repeat="recipeListIng in recipeListIngredient" class="btn btn-success">#{ recipeListIng.title }#</span>
+      </div>
+   </div>
+
+   <div class="form-group">
+      <div class="col-md-9 col-sm-9 col-xs-12">
+         <input type="hidden" name="recipeListIngHidden" ng-model="recipeListIngHidden">
+         <p ng-bind="recipeListIngHidden"></p>
+      </div>
+   </div>
+
 
 
 
@@ -92,7 +108,6 @@
    </div>
 
 </form>
-<div id="content" ng-controller="ListIngController">
 
    <div class="form-group">
       <label class="col-md-3 col-sm-3 col-xs-12 control-label">select liste
@@ -101,11 +116,8 @@
          <label for="sel1">Select list:</label>
          <select class="form-control" id="sel1" ng-model="allListIngredient.model">
            <option ng-click="raz()">new liste</option>
-           <option ng-repeat="listIngredient in allListIngredient track by $index" ng-click="test()" ng-value="#{ listIngredient }#">#{ listIngredient.title }#</option>
+           <option ng-repeat="listIngredient in allListIngredient track by $index" ng-click="showList()" ng-value="#{ listIngredient }#">#{ listIngredient.title }#</option>
          </select>
-      </div>
-      <div class="col-md-3 col-sm-3 col-xs-12">
-         <button type="submit" class="btn btn-primary" ng-click="AddListIngToArt()">Ajoutera la recette</button>
       </div>
    </div>
 
@@ -123,15 +135,15 @@
    <div class="col-md-9 col-sm-9 col-xs-12">
       <table class="table table-striped">
          <tbody>
-          <tr ng-repeat="ing in listIngredient.ingredient track by $index">
-             <td>#{ ing }#</td>
-             <td><input class="form-control"  type="number" id="#{ing.id}#" name="ingredient"></td>
+          <tr ng-repeat="ing in listIngredient.ingredients track by $index">
+             <td>#{ ing.name }#</td>
+             <td><input class="form-control"  type="number" ng-model="ing.quantity" name="ingredient" value="#{ ing.quantity }#"></td>
           </tr>
          </tbody>
       </table>
    </div>
    <div class="col-md-3 col-sm-3 col-xs-12">
-      <button type="submit" class="btn btn-primary" ng-click="AddListIng()">Ajouter</button>
+      <button type="submit" class="btn btn-primary" ng-disabled="existTitle()" ng-click="AddListIng()">Ajouter la listIngredient</button>
    </div>
    <!-- input d'ajout d'ingredient a la liste a rajouter un autocomplete -->
    <div class="form-group">

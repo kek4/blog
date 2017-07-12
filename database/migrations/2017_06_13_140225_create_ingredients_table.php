@@ -15,9 +15,9 @@ class CreateIngredientsTable extends Migration
     {
         Schema::create('ingredients', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('title', 100)->unique();
-            $table->string('unite', 20)->default(0);
-            $table->timestamps();
+            $table->string('name', 100)->unique();
+            $table->string('unite', 20)->default('qte');
+
         });
     }
 

@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Ingredient extends Model
 {
+   public $timestamps = false;
+   protected $hidden = ['pivot'];
    public function list_ingredients()
    {
       return $this->belongsToMany(ListIngredient::class);

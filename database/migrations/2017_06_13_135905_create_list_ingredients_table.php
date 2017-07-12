@@ -16,7 +16,6 @@ class CreateListIngredientsTable extends Migration
         Schema::create('list_ingredients', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title', 100)->unique();
-            $table->timestamps();
         });
     }
 

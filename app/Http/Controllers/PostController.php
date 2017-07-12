@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Post;
 use App\Picture;
+use App\ListIngredient;
+use App\Ingredient;
 use Validator;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
@@ -53,7 +55,7 @@ class PostController extends Controller
       ]);
       if ($validator->fails() && $request->isMethod('post')) {
         return redirect()->route('admin.create')->withErrors($validator)->withInput();
-      }elseif ($request->isMethod('post')) {
+         }elseif ($request->isMethod('post')) {
       //   toaster
       //   if ($request->gender) {
       //     $successMsg = 'Nouvel auteur enregistré';
@@ -83,11 +85,57 @@ class PostController extends Controller
          // $file->move($destinationPath, $fileName);
 
 
+         $recipeListIng = json_decode($request->recipeListIngHidden);
+         foreach ($recipeListIng as $listIng) {
+            if ($listIng->new == 1) {
+               # code...
+            }
+            //$listIngredient = new ListIngredient();
+            //le titre
+            //$value->title;
+            // foreach ($value->ingredient as $key => $value) {
+            //tableau d'ingrédient : on ajoute si existe pas sinon on prend l'id et on ajoute dans table pivot
+               // $ingredient = new Ingredient();
+            // }
+         }
+
+
 
          return redirect()->route('admin.create')->with('success', 'La recette :'.$request->title.' a été créee');
-      }
+         }
       return view('posts.new');
       }
+
+      /**
+      *Check if list of ingredient exist, if not insert in bdd then associate with the current post
+      *
+      * @param  string $listIngredient
+      * @return
+      */
+      public function insert_list_ingredient($listIngredient)
+      {
+          if ($listIngredient->new == 1) {
+             $newList = new ListIngredient();
+             $newList->title = $listIngredient->title;
+             $newList->save();
+          }
+      }
+
+      /**
+      *Check if an ingredient exist, if not insert in bdd
+      *
+      * @param  string $ingredient
+      * @return
+      */
+      public function insert_ingredient($ingredient)
+      {
+          if ($listIngredient->new == 1) {
+             $newList = new ListIngredient();
+             $newList->title = $listIngredient->title;
+             $newList->save();
+          }
+      }
+
       // $article = new Article();
       // $post->title = $request->get('title');
       // $post->body = $request->get('body');
