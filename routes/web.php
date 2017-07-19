@@ -17,10 +17,13 @@ Route::get('/', function () {
 
 //Ingredients
 
-Route::group(['prefix' => 'admin'], function(){
-   Route::get('create',function () {
-       return view('posts.new');
-   });
+
+   Route::get('/create', 'PostController@create')->name('create');
+   Route::get('/index', 'PostController@index')->name('index');
+   Route::get('/store', 'PostController@store')->name('store');
+   Route::get('/single/{id}', 'PostController@single')->name('single');
+   Route::get('/delete/{id}', 'PostController@delete')->name('delete');
+   Route::get('/available/{id}', 'PostController@available')->name('available');
    Route::group(['prefix' => 'ingredient'], function(){
       // Route::get('/list', 'BookController@toList')->name('book.list');
       Route::get('/ingredient-listJson', 'IngredientController@listJson')->name('ingredient.listJson');
@@ -34,10 +37,10 @@ Route::group(['prefix' => 'admin'], function(){
       Route::get('/listIng-listJson', 'ListIngController@listJson')->name('list-ingredient.listJson');
       Route::post('/store', 'ListIngController@store')->name('list-ingredient.store');
    });
-});
+
 
 Route::get('home', 'PostController@index');
 
-Route::resource('admin', 'PostController');
+// Route::resource('admin', 'PostController');
 
 Auth::routes();

@@ -6,6 +6,7 @@ app.controller('ListIngController', function ListIngController($scope, $http) {
    $scope.recipeListIngredient = [];
    $scope.errorTitle = 'Le titre est trop court';
    $scope.existTitle = 'Le titre existe déjà';
+   $scope.addButton = true;
 
 
    //Get list of all ingredient in json
@@ -23,38 +24,38 @@ app.controller('ListIngController', function ListIngController($scope, $http) {
    };
 
    $scope.AddListIng = function(){
-      // if (!exist()) {
+      if (!exist()) {
          ($scope.listIngredient).title = $scope.MyTitleListIng;
          ($scope.allListIngredient).push($scope.listIngredient);
          ($scope.recipeListIngredient).push($scope.listIngredient);
          $scope.MyTitleListIng = '';
          $scope.listIngredient = {title:'', new:0, ingredients:[]};
          $scope.recipeListIngHidden = JSON.stringify($scope.recipeListIngredient);
-      // }
+      }
    };
 
 
    //refaire pour checker l'existence du titre de la liste. on check les ingredient dans le controller laravel
     $scope.existTitle = function (){
-   //    var exist = false;
-   //          angular.forEach($scope.allListIngredient, function(value, key) {
-   //             console.log(value.title);
-   //             console.log($scope.MyTitleListIng);
-   //             if(value.title == $scope.MyTitleListIng){
-   //                console.log('yes');
-   //                return true;
-   //             }
-   //             console.log('no');
-   //          });
-   //          return false;
+         $.each(($scope.allListIngredient), function(i, obj){
+            if(obj.title == $scope.MyTitleListIng){
+               $scope.addButton = false;
+            }else {
+               $scope.addButton = true;
+            }
+         });
    }
 
+
     function exist(){
-         $.each(($scope.allListIngredient).listIng, function(i, obj){
+      console.log('test');
+         $.each(($scope.allListIngredient), function(i, obj){
             if(obj.title == $scope.MyTitleListIng){
+               console.log('yes');
                return true;
             }
          });
+         console.log('no');
       return false;
    }
 

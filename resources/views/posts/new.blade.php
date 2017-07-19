@@ -24,7 +24,7 @@
 </div>
 
 <div id="content" ng-controller="ListIngController">
-<form  role="form" method="post" action="{{ route('admin.store') }}" class="form-horizontal" enctype="multipart/form-data">
+<form  role="form" method="post" action="{{ route('store') }}" class="form-horizontal" enctype="multipart/form-data">
    {{ csrf_field() }}
    <div class="form-group">
       <label class="control-label col-md-3 col-sm-3 col-xs-12 @if($errors->has('title')) text-danger @elseif(count($errors) > 0) text-success @endif">Titre</label>
@@ -92,8 +92,7 @@
 
    <div class="form-group">
       <div class="col-md-9 col-sm-9 col-xs-12">
-         <input type="hidden" name="recipeListIngHidden" ng-model="recipeListIngHidden">
-         <p ng-bind="recipeListIngHidden"></p>
+         <input type="hidden" name="recipeListIngHidden" ng-model="recipeListIngHidden" value="#{ recipeListIngHidden }#">
       </div>
    </div>
 
@@ -110,8 +109,6 @@
 </form>
 
    <div class="form-group">
-      <label class="col-md-3 col-sm-3 col-xs-12 control-label">select liste
-      </label>
       <div class="col-md-6 col-sm-6 col-xs-12">
          <label for="sel1">Select list:</label>
          <select class="form-control" id="sel1" ng-model="allListIngredient.model">
@@ -124,11 +121,9 @@
    <div class="form-group" ng-class="MyTitleListIng.length < 3 && MyTitleListIng.length > 0 ? 'has-error' : ''">
       <label class="control-label col-md-3 col-sm-3 col-xs-12">Titre</label>
       <div class="col-md-9 col-sm-9 col-xs-12">
-         <input class="form-control " placeholder="Titre" ng-model="MyTitleListIng" type="text" id="title" name="title">
+         <input class="form-control " placeholder="Titre" ng-keyup="existTitle()" ng-model="MyTitleListIng" type="text" id="title" name="title">
       </div>
       <span class="col-md-9 col-sm-9 col-xs-12 text-danger" ng-class="MyTitleListIng.length < 3 && MyTitleListIng.length > 0 ? 'error-list-ing' : 'ok-list-ing'">#{ errorTitle }#</span>
-      <!-- A revoir ca ne fonctionne pas -->
-      <!-- <span class="col-md-9 col-sm-9 col-xs-12 text-danger" ng-class="existTitle() ? 'error-list-ing' : 'ok-list-ing'">#{ existTitle }#</span> -->
    </div>
 
    <!-- tableau des ingredient de la liste a verifier pour l'id -->
@@ -143,7 +138,7 @@
       </table>
    </div>
    <div class="col-md-3 col-sm-3 col-xs-12">
-      <button type="submit" class="btn btn-primary" ng-disabled="existTitle()" ng-click="AddListIng()">Ajouter la listIngredient</button>
+      <button type="submit" class="btn btn-primary" ng-disabled="addButton" ng-click="AddListIng()">Ajouter la listIngredient</button>
    </div>
    <!-- input d'ajout d'ingredient a la liste a rajouter un autocomplete -->
    <div class="form-group">

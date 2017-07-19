@@ -20,9 +20,40 @@ class PostController extends Controller
      */
     public function index()
     {
-       return view('posts.index');
-      //  return view('articles.index', ['articles' => Article::All()]);
+       return view('posts.index', ['posts' => Post::All()]);
     }
+    /**
+     * Display a single post.
+     *
+     * @param  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function single(Post $id)
+    {
+       return view('posts.single', ['post' => $id]);
+    }
+    /**
+     * Delete a post.
+     *
+     * @param  $id
+     * @return \Illuminate\Http\Response
+     */
+       public function delete(Post $id){
+        $id->delete();
+        return redirect()->route('index',['Post' => Post::All()])->with('success','Recette supprimée');
+      }
+    /**
+     * Delete a post.
+     *
+     * @param  $id
+     * @return \Illuminate\Http\Response
+     */
+        public function available(Post $id){
+           $id->available = $id->available==1 ? 0 : 1;
+           $id->save();
+           $msg = ($id->available==0) ? "n'est maintenant plus visible" : "est maintenant visibible" ;
+           return redirect()->route('index',['Post' => Post::All()])->with('success','Cet article '.$msg);
+        }
 
     /**
      * Show the form for creating a new resource.
@@ -56,14 +87,7 @@ class PostController extends Controller
       if ($validator->fails() && $request->isMethod('post')) {
         return redirect()->route('admin.create')->withErrors($validator)->withInput();
          }elseif ($request->isMethod('post')) {
-      //   toaster
-      //   if ($request->gender) {
-      //     $successMsg = 'Nouvel auteur enregistré';
-      //   }else{
-      //     $successMsg = 'Nouvelle auteur enregistrée';
-      //   }
-
-
+         //Create new post
          $post = new Post();
          $post->title = $request->title;
          $post->description = $request->description;
@@ -72,7 +96,7 @@ class PostController extends Controller
             $post->available = 1;
          }
          $post->save();
-
+         //Create new picture
          $picture = new Picture();
          $picture->post_id = $post->id;
          $picture->title = $request->title;
@@ -84,22 +108,13 @@ class PostController extends Controller
          // $fileName = $file->getClientOriginalName();
          // $file->move($destinationPath, $fileName);
 
-
+         // Create or insert list of ingredient and ingredient
          $recipeListIng = json_decode($request->recipeListIngHidden);
-         foreach ($recipeListIng as $listIng) {
-            if ($listIng->new == 1) {
-               # code...
+         if (!is_null($recipeListIng)) {
+            foreach ($recipeListIng as $listIng) {
+               self::insert_list_ingredient($listIng, $post->id);
             }
-            //$listIngredient = new ListIngredient();
-            //le titre
-            //$value->title;
-            // foreach ($value->ingredient as $key => $value) {
-            //tableau d'ingrédient : on ajoute si existe pas sinon on prend l'id et on ajoute dans table pivot
-               // $ingredient = new Ingredient();
-            // }
          }
-
-
 
          return redirect()->route('admin.create')->with('success', 'La recette :'.$request->title.' a été créee');
          }
@@ -112,13 +127,16 @@ class PostController extends Controller
       * @param  string $listIngredient
       * @return
       */
-      public function insert_list_ingredient($listIngredient)
+      public static function insert_list_ingredient($listIngredient, $idPost)
       {
-          if ($listIngredient->new == 1) {
-             $newList = new ListIngredient();
-             $newList->title = $listIngredient->title;
-             $newList->save();
-          }
+         $test = ListIngredient::where('title', $listIngredient->title)->exists();
+         $newList = ListIngredient::firstOrCreate(['title' => $listIngredient->title]);
+         if (!$test) {
+            foreach ($listIngredient->ingredients as $ingredient) {
+               self::insert_ingredient($ingredient, $newList->id);
+            }
+         }
+         $newList->posts()->attach($idPost);
       }
 
       /**
@@ -127,13 +145,10 @@ class PostController extends Controller
       * @param  string $ingredient
       * @return
       */
-      public function insert_ingredient($ingredient)
+      public static function insert_ingredient($ingredient, $idList)
       {
-          if ($listIngredient->new == 1) {
-             $newList = new ListIngredient();
-             $newList->title = $listIngredient->title;
-             $newList->save();
-          }
+          $newIngredient = Ingredient::firstOrCreate(['name' => $ingredient->name, 'unite' => $ingredient->unite]);
+          $newIngredient->list_ingredients()->attach($idList, array('quantity' => $ingredient->quantity));
       }
 
       // $article = new Article();
