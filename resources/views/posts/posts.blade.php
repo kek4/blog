@@ -1,5 +1,5 @@
 
-@extends('layouts.admin')
+@extends('layouts.layout')
 @section('css')
    @parent
    <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
@@ -30,16 +30,16 @@
 <table class="table table-striped table-bordered">
 @foreach($posts as $post)
    <tr>
-      <td><a href="{{ route('single', [ 'id' => $post->id]) }}">{{ $post->title }}</a></td>
+      <td><a href="{{ route('post.single', [ 'id' => $post->id]) }}">{{ $post->title }}</a></td>
       <td>{{ $post->short_description }}</td>
       <td>{{ mb_strimwidth($post->description, 0 , 10, "...") }}</td>
-      <td><a href="{{ route('available', ['id' => $post->id ]) }}">
+      <td><a href="{{ route('post.available', ['id' => $post->id ]) }}">
          @if($post->available == 1)
          <i class="fa fa-eye fa-2x" aria-hidden="true"></i>
          @else
          <i class="fa fa-eye-slash fa-2x" aria-hidden="true"></i>
          @endif</a></td>
-      <td><a href="{{ route('delete', ['id' => $post->id]) }}"><i class="fa fa-trash-o fa-2x" aria-hidden="true"></i></a></td>
+      <td><a href="{{ route('post.delete', ['id' => $post->id]) }}"><i class="fa fa-trash-o fa-2x" aria-hidden="true"></i></a></td>
    </tr>
 @endforeach
 </table>

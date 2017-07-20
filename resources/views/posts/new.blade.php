@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.layout')
 @section('css')
    @parent
    <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
@@ -24,7 +24,7 @@
 </div>
 
 <div id="content" ng-controller="ListIngController">
-<form  role="form" method="post" action="{{ route('store') }}" class="form-horizontal" enctype="multipart/form-data">
+<form  role="form" method="post" action="{{ route('post.store') }}" class="form-horizontal" enctype="multipart/form-data">
    {{ csrf_field() }}
    <div class="form-group">
       <label class="control-label col-md-3 col-sm-3 col-xs-12 @if($errors->has('title')) text-danger @elseif(count($errors) > 0) text-success @endif">Titre</label>

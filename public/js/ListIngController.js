@@ -10,7 +10,7 @@ app.controller('ListIngController', function ListIngController($scope, $http) {
 
 
    //Get list of all ingredient in json
-   $http.get('list-ingredient/listIng-listJson').then(function(response){
+   $http.get('../list-ingredient/listIng-listJson').then(function(response){
       $scope.allListIngredient = response.data;
    });
 

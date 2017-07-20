@@ -18,9 +18,9 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function posts()
     {
-       return view('posts.index', ['posts' => Post::All()]);
+       return view('posts.posts', ['posts' => Post::All()]);
     }
     /**
      * Display a single post.
@@ -39,8 +39,9 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
        public function delete(Post $id){
+         $id->list_ingredients()->detach();
         $id->delete();
-        return redirect()->route('index',['Post' => Post::All()])->with('success','Recette supprimée');
+        return redirect()->route('post.posts',['Post' => Post::All()])->with('success','Recette supprimée');
       }
     /**
      * Delete a post.
@@ -51,8 +52,8 @@ class PostController extends Controller
         public function available(Post $id){
            $id->available = $id->available==1 ? 0 : 1;
            $id->save();
-           $msg = ($id->available==0) ? "n'est maintenant plus visible" : "est maintenant visibible" ;
-           return redirect()->route('index',['Post' => Post::All()])->with('success','Cet article '.$msg);
+           $msg = ($id->available==0) ? "n'est maintenant plus visible" : "est maintenant visible" ;
+           return redirect()->route('post.posts',['Post' => Post::All()])->with('success','Cet article '.$msg);
         }
 
     /**

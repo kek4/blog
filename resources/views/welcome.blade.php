@@ -83,8 +83,8 @@
                 </div>
 
                 <div class="links">
-                    <a href="{{ route('create') }}">Create</a>
-                    <a href="{{ route('index') }}">Liste</a>
+                    <a href="{{ route('post.create') }}">Create</a>
+                    <a href="{{ route('post.posts') }}">Liste</a>
                     <a href="https://laravel-news.com">News</a>
                     <a href="https://forge.laravel.com">Forge</a>
                     <a href="https://github.com/laravel/laravel">GitHub</a>
