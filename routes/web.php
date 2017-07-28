@@ -32,7 +32,7 @@ Route::group(['prefix' => 'admin'
       Route::get('/index', 'PostController@index')->name('index');
       Route::get('/create', 'PostController@create')->name('create');
       Route::get('/posts', 'PostController@posts')->name('posts');
-      Route::get('/store', 'PostController@store')->name('store');
+      Route::post('/store', 'PostController@store')->name('store');
       Route::get('/single/{id}', 'PostController@single')->name('single');
       Route::get('/delete/{id}', 'PostController@delete')->name('delete');
       Route::get('/available/{id}', 'PostController@available')->name('available');
@@ -40,6 +40,7 @@ Route::group(['prefix' => 'admin'
    //Liste Ingredients
    Route::group(['prefix' => 'list-ingredient','as'=>'list-ingredient.'], function(){
       Route::get('/listIng-listJson', 'ListIngController@listJson')->name('listJson');
+      Route::get('/index', 'ListIngController@index')->name('index');
    });
 });
 

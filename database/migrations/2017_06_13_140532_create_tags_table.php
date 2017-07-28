@@ -16,6 +16,7 @@ class CreateTagsTable extends Migration
         Schema::create('tags', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->integer('post_count')->unsigned()->default(1);
         });
 
         Schema::create('post_tag', function (Blueprint $table) {

@@ -36,6 +36,10 @@
 
 @yield('content')
 </div>
+<div class="col-md-12">
+
+   @include('layouts/_footer')
+</div>
 </main>
 
     <!-- Scripts -->
@@ -51,7 +55,7 @@
    <script src="{{ asset('js/ListIngController.js') }}"></script>
 @show
 
-@include('layouts/_footer')
+
 
 </body>
 

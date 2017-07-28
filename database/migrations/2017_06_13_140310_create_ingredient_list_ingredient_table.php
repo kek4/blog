@@ -18,7 +18,7 @@ class CreateIngredientListIngredientTable extends Migration
            $table->foreign('ingredient_id')->references('id')->on('ingredients')->onDelete('cascade');
            $table->integer('list_ingredient_id')->unsigned()->index();
            $table->foreign('list_ingredient_id')->references('id')->on('list_ingredients')->onDelete('cascade');
-           $table->integer('quantity')->default(0);
+           $table->string('quantity')->default('');
         });
     }
 

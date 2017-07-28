@@ -54,6 +54,13 @@
       @endif
    </div>
    <div class="form-group">
+      <label class="control-label col-md-3 col-sm-3 col-xs-12">Tags</label>
+      <div class="col-md-9 col-sm-9 col-xs-12">
+         <input class="form-control " placeholder="Tags" type="text" id="tags" name="tags">
+      </div>
+   </div>
+
+   <div class="form-group">
     <label for="inputFile" class="control-label col-md-3 col-sm-3 col-xs-12 @if($errors->has('inputFile')) text-danger @endif">Images</label>
     <div class="col-md-9 col-sm-9 col-xs-12">
       <input type="file" name="inputFile" id="inputFile" value="{{ old('inputFile') }}" multiple>
@@ -132,7 +139,7 @@
          <tbody>
           <tr ng-repeat="ing in listIngredient.ingredients track by $index">
              <td>#{ ing.name }#</td>
-             <td><input class="form-control"  type="number" ng-model="ing.quantity" name="ingredient" value="#{ ing.quantity }#"></td>
+             <td><input class="form-control"  type="text" ng-model="ing.quantity" name="ingredient" value="#{ ing.quantity }#"></td>
           </tr>
          </tbody>
       </table>

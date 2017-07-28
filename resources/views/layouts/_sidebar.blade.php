@@ -6,6 +6,7 @@
       <ul>
         <li><a href="{{ route('post.create') }}">Créer recette</a></li>
         <li><a href="{{ route('post.posts') }}">Liste</a></li>
+        <li><a href="{{ route('list-ingredient.index') }}">Liste Ingredient</a></li>
       </ul>
     </li>
   </ul>

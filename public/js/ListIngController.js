@@ -6,7 +6,7 @@ app.controller('ListIngController', function ListIngController($scope, $http) {
    $scope.recipeListIngredient = [];
    $scope.errorTitle = 'Le titre est trop court';
    $scope.existTitle = 'Le titre existe déjà';
-   $scope.addButton = true;
+   $scope.addButton = false;
 
 
    //Get list of all ingredient in json
@@ -15,7 +15,7 @@ app.controller('ListIngController', function ListIngController($scope, $http) {
    });
 
    $scope.AddIngredient = function(){
-      var ingredient = {name:$scope.MyIngredient, quantity:0, unite:'qte'};
+      var ingredient = {name:$scope.MyIngredient, quantity:0};
       (($scope.listIngredient).ingredients).push(ingredient);
       if (($scope.listIngredient).new == 0) {
          ($scope.listIngredient).new = 1;
@@ -39,9 +39,9 @@ app.controller('ListIngController', function ListIngController($scope, $http) {
     $scope.existTitle = function (){
          $.each(($scope.allListIngredient), function(i, obj){
             if(obj.title == $scope.MyTitleListIng){
-               $scope.addButton = false;
-            }else {
                $scope.addButton = true;
+            }else {
+               $scope.addButton = false;
             }
          });
    }

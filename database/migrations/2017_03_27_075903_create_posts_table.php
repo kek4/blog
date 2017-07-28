@@ -21,7 +21,6 @@ class CreatePostsTable extends Migration
            $table->integer('nbers')->default(0);
            $table->integer('bake_time')->default(0);
            $table->integer('prep_time')->default(0);
-           $table->integer('temperature')->default(0);
            $table->boolean('available')->default(0);
            $table->timestamps();
       });

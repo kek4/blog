@@ -33,6 +33,10 @@
       <td><a href="{{ route('post.single', [ 'id' => $post->id]) }}">{{ $post->title }}</a></td>
       <td>{{ $post->short_description }}</td>
       <td>{{ mb_strimwidth($post->description, 0 , 10, "...") }}</td>
+      <td>@foreach($post->tags as $tag)
+         <a href="#" class="badge badge-default">{{ $tag->name }}</a>
+         @endforeach
+      </td>
       <td><a href="{{ route('post.available', ['id' => $post->id ]) }}">
          @if($post->available == 1)
          <i class="fa fa-eye fa-2x" aria-hidden="true"></i>
@@ -42,6 +46,7 @@
       <td><a href="{{ route('post.delete', ['id' => $post->id]) }}"><i class="fa fa-trash-o fa-2x" aria-hidden="true"></i></a></td>
    </tr>
 @endforeach
+{{ $posts->links() }}
 </table>
 
 

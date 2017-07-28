@@ -22,11 +22,16 @@ class ListIngController extends Controller
      $this->ingredients = $ingredients;
    }
 
+   public function index()
+   {
+      return view('list_ing.list_ing', ['listIngs' => self::listJson()]);
+     }
+
    public function listJson(){
       $lists = ListIngredient::all();
       $lists_complete = collect();
       foreach ($lists as $list) {
-         $ingredients = $list->ingredients()->get(['name','quantity', 'unite'])->toArray();
+         $ingredients = $list->ingredients()->get(['name','quantity'])->toArray();
          $tmp_list = new self($list->title);
          $tmp_list->ingredients = $ingredients;
          $lists_complete->push($tmp_list);

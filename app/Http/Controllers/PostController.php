@@ -10,9 +10,16 @@ use App\Ingredient;
 use Validator;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Pagination\Paginator;
 
 class PostController extends Controller
 {
+
+
+   private function renderPosts() {
+      $posts =  Post::with(['list_ingredients', 'tags'])->paginate(1);
+      return view('posts.posts', ['posts' => $posts]);
+   }
     /**
      * Display a listing of the resource.
      *
@@ -20,7 +27,7 @@ class PostController extends Controller
      */
     public function posts()
     {
-       return view('posts.posts', ['posts' => Post::All()]);
+      return $this->renderPosts();
     }
     /**
      * Display a single post.
@@ -41,7 +48,7 @@ class PostController extends Controller
        public function delete(Post $id){
          $id->list_ingredients()->detach();
         $id->delete();
-        return redirect()->route('post.posts',['Post' => Post::All()])->with('success','Recette supprimée');
+        return redirect()->route('post.posts',['Post' => Post::with(['list_ingredients', 'tags'])->get()])->with('success','Recette supprimée');
       }
     /**
      * Delete a post.
@@ -53,7 +60,7 @@ class PostController extends Controller
            $id->available = $id->available==1 ? 0 : 1;
            $id->save();
            $msg = ($id->available==0) ? "n'est maintenant plus visible" : "est maintenant visible" ;
-           return redirect()->route('post.posts',['Post' => Post::All()])->with('success','Cet article '.$msg);
+           return redirect()->route('post.posts',['Post' => Post::with(['list_ingredients', 'tags'])->get()])->with('success','Cet article '.$msg);
         }
 
     /**
@@ -78,7 +85,7 @@ class PostController extends Controller
       'title' => 'required|unique:posts',
       'description' => 'required',
       'short_description' => 'required',
-      'inputFile' => 'required|image',
+      // 'inputFile' => 'required|image',
       ],
       [
       'title.required' => 'Le champ titre est requis',
@@ -86,7 +93,7 @@ class PostController extends Controller
       'short_description.required' => 'Une description courte est requise',
       ]);
       if ($validator->fails() && $request->isMethod('post')) {
-        return redirect()->route('admin.create')->withErrors($validator)->withInput();
+        return redirect()->route('post.create')->withErrors($validator)->withInput();
          }elseif ($request->isMethod('post')) {
          //Create new post
          $post = new Post();
@@ -98,16 +105,18 @@ class PostController extends Controller
          }
          $post->save();
          //Create new picture
-         $picture = new Picture();
-         $picture->post_id = $post->id;
-         $picture->title = $request->title;
-         $picture->alt = $request->title;
-         $picture->save();
-         $path = $request->file('inputFile')->storeAs('pictures',$request->title.'.jpg');
+         // $picture = new Picture();
+         // $picture->post_id = $post->id;
+         // $picture->title = $request->title;
+         // $picture->alt = $request->title;
+         // $picture->save();
+         // $path = $request->file('inputFile')->storeAs('pictures',$request->title.'.jpg');
          // $destinationPath = public_path("/uploads/");
          // $file = $request->file('inputFile');
          // $fileName = $file->getClientOriginalName();
          // $file->move($destinationPath, $fileName);
+
+         $post->saveTags($request->tags);
 
          // Create or insert list of ingredient and ingredient
          $recipeListIng = json_decode($request->recipeListIngHidden);
@@ -117,7 +126,7 @@ class PostController extends Controller
             }
          }
 
-         return redirect()->route('admin.create')->with('success', 'La recette :'.$request->title.' a été créee');
+         return redirect()->route('post.create')->with('success', 'La recette :'.$request->title.' a été créee');
          }
       return view('posts.new');
       }
@@ -148,7 +157,7 @@ class PostController extends Controller
       */
       public static function insert_ingredient($ingredient, $idList)
       {
-          $newIngredient = Ingredient::firstOrCreate(['name' => $ingredient->name, 'unite' => $ingredient->unite]);
+          $newIngredient = Ingredient::firstOrCreate(['name' => $ingredient->name]);
           $newIngredient->list_ingredients()->attach($idList, array('quantity' => $ingredient->quantity));
       }
 
